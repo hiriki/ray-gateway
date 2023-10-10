@@ -5,6 +5,7 @@ import cn.ray.gateway.common.utils.RemotingHelper;
 import cn.ray.gateway.common.utils.RemotingUtil;
 import cn.ray.gateway.core.GatewayConfig;
 import cn.ray.gateway.core.LifeCycle;
+import cn.ray.gateway.core.netty.processor.NettyProcessor;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.buffer.PooledByteBufAllocator;
 import io.netty.channel.*;
@@ -41,8 +42,11 @@ public class NettyHttpServer implements LifeCycle {
 
     private EventLoopGroup worker;
 
-    public NettyHttpServer(GatewayConfig gatewayConfig) {
+    private NettyProcessor nettyProcessor;
+
+    public NettyHttpServer(GatewayConfig gatewayConfig, NettyProcessor nettyProcessor) {
         this.gatewayConfig = gatewayConfig;
+        this.nettyProcessor = nettyProcessor;
         if (gatewayConfig.getPort() > 0 && gatewayConfig.getPort() < 65535) {
             this.port = gatewayConfig.getPort();
         }
@@ -95,7 +99,7 @@ public class NettyHttpServer implements LifeCycle {
                                 // 客户端会发送一个带有 Expect: 100-continue 头部的请求
                                 // 如果服务器愿意接受，它会返回 100 Continue 响应码，然后客户端就可以继续发送文件数据。
                                 new NettyServerConnectManagerHandler(),
-                                new NettyHttpServerHandler()
+                                new NettyHttpServerHandler(nettyProcessor)
                         );
                     }
                 });

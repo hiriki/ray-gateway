@@ -38,16 +38,16 @@ public class NettyHttpClient implements LifeCycle {
     @Override
     public void init() {
         this.clientBuilder = new DefaultAsyncHttpClientConfig.Builder()
-                .setFollowRedirect(false)
-                .setEventLoopGroup(this.clientWorker)
-                .setConnectTimeout(gatewayConfig.getHttpConnectTimeout())
-                .setRequestTimeout(gatewayConfig.getHttpRequestTimeout())
-                .setMaxConnections(gatewayConfig.getHttpMaxConnections())
-                .setMaxConnectionsPerHost(gatewayConfig.getHttpConnectionsPerHost())
-                .setMaxRequestRetry(gatewayConfig.getHttpMaxRequestRetry())
-                .setPooledConnectionIdleTimeout(gatewayConfig.getHttpPooledConnectionIdleTimeout())
-                .setAllocator(PooledByteBufAllocator.DEFAULT)
-                .setCompressionEnforced(true);
+                .setFollowRedirect(false)   // 禁用自动重定向
+                .setEventLoopGroup(this.clientWorker) // 事件循环组，用于处理客户端的网络事件
+                .setConnectTimeout(gatewayConfig.getHttpConnectTimeout()) // 连接超时时间
+                .setRequestTimeout(gatewayConfig.getHttpRequestTimeout()) // 请求超时时间
+                .setMaxConnections(gatewayConfig.getHttpMaxConnections()) // 允许的最大连接数
+                .setMaxConnectionsPerHost(gatewayConfig.getHttpConnectionsPerHost()) // 每个主机允许的最大连接数
+                .setMaxRequestRetry(gatewayConfig.getHttpMaxRequestRetry()) // 最大的请求重试次数
+                .setPooledConnectionIdleTimeout(gatewayConfig.getHttpPooledConnectionIdleTimeout()) // 池化连接的空闲超时时间，即在连接池中保持连接的最大空闲时间
+                .setAllocator(PooledByteBufAllocator.DEFAULT)   // 使用 Netty 的内存池来分配内存
+                .setCompressionEnforced(true); // 启用压缩功能，客户端会发送支持压缩的请求
     }
 
     @Override

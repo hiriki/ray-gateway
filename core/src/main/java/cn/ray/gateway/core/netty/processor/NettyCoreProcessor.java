@@ -20,6 +20,7 @@ public class NettyCoreProcessor implements NettyProcessor {
 
             //	2. 执行整个的过滤器逻辑：FilterChain
 
+            System.err.println("进入过滤器逻辑");
         } catch (Throwable t) {
         }
     }

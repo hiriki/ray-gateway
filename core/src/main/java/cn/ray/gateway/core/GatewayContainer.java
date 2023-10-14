@@ -61,12 +61,15 @@ public class GatewayContainer implements LifeCycle {
         //	3. 创建 NettyHttpServer
         this.nettyHttpServer = new NettyHttpServer(gatewayConfig,this.nettyProcessor);
 
+        //	4. 创建NettyHttpClient，复用 server worker EventLoopGroup，减少上下文切换
+        nettyHttpClient = new NettyHttpClient(gatewayConfig, nettyHttpServer.getWorker());
     }
 
     @Override
     public void start() {
         this.nettyProcessor.start();
         this.nettyHttpServer.start();
+        this.nettyHttpClient.start();
         log.info("GatewayContainer started !");
     }
 
@@ -74,5 +77,6 @@ public class GatewayContainer implements LifeCycle {
     public void shutdown() {
         this.nettyProcessor.shutdown();
         this.nettyHttpServer.shutdown();
+        this.nettyHttpClient.shutdown();
     }
 }

@@ -127,6 +127,14 @@ public class NettyHttpServer implements LifeCycle {
     }
 
     /**
+     * 获取 NettyHttpServer 的 Worker EventLoopGroup
+     * @return EventLoopGroup
+     */
+    public EventLoopGroup getWorker() {
+        return worker;
+    }
+
+    /**
      * 判断是否支持EPoll
      * @return
      */

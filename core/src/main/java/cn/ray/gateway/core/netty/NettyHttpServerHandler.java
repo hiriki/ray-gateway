@@ -2,10 +2,10 @@ package cn.ray.gateway.core.netty;
 
 import cn.ray.gateway.core.context.HttpRequestWrapper;
 import cn.ray.gateway.core.netty.processor.NettyProcessor;
-import com.google.logging.type.HttpRequest;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.handler.codec.http.FullHttpRequest;
+import io.netty.handler.codec.http.HttpRequest;
 import io.netty.util.ReferenceCountUtil;
 import lombok.extern.slf4j.Slf4j;
 

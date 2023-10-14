@@ -16,5 +16,14 @@ public class Bootstrap {
         //	3. 初始化服务注册管理中心（服务注册管理器）, 监听动态配置的新增、修改、删除
 
         //	4. 启动容器
+        GatewayContainer container = new GatewayContainer(gatewayConfig);
+        container.start();
+
+        Runtime.getRuntime().addShutdownHook(new Thread(){
+            @Override
+            public void run() {
+                container.shutdown();
+            }
+        });
     }
 }

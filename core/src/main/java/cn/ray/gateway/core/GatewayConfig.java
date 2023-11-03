@@ -2,6 +2,7 @@ package cn.ray.gateway.core;
 
 import cn.ray.gateway.common.constants.BasicConstants;
 import cn.ray.gateway.common.utils.NetUtil;
+import com.lmax.disruptor.*;
 import lombok.Data;
 
 /**
@@ -87,6 +88,20 @@ public class GatewayConfig {
      */
     private String waitStrategy = "blocking";
 
+    public WaitStrategy getUseWaitStrategy() {
+        switch (waitStrategy) {
+            case "blocking":
+                return new BlockingWaitStrategy();
+            case "busySpin":
+                return new BusySpinWaitStrategy();
+            case "yielding":
+                return new YieldingWaitStrategy();
+            case "sleeping":
+                return new SleepingWaitStrategy();
+            default:
+                return new BlockingWaitStrategy();
+        }
+    }
 
     //  Http Async 参数选项：
 

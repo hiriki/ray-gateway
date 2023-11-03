@@ -29,7 +29,7 @@ public class ParallelFlusher<E> implements Flusher<E> {
 
         this.executorService = Executors.newFixedThreadPool(
                 builder.threadSize,
-                new ThreadFactoryBuilder().setNameFormat("ParallelFlusher-" + builder.threadPrefix + "-pool-%d").build()
+                new ThreadFactoryBuilder().setNameFormat("ParallelFlusher-" + builder.threadNamePrefix + "-pool-%d").build()
         );
 
         this.eventListener = builder.eventListener;
@@ -173,7 +173,7 @@ public class ParallelFlusher<E> implements Flusher<E> {
         /**
          * 线程前缀
          */
-        private String threadPrefix;
+        private String threadNamePrefix;
 
         /**
          * 等待策略
@@ -203,9 +203,9 @@ public class ParallelFlusher<E> implements Flusher<E> {
             return this;
         }
 
-        public Builder<E> setThreadPrefix(String threadPrefix) {
-            Preconditions.checkNotNull(threadPrefix);
-            this.threadPrefix = threadPrefix;
+        public Builder<E> setThreadNamePrefix(String threadNamePrefix) {
+            Preconditions.checkNotNull(threadNamePrefix);
+            this.threadNamePrefix = threadNamePrefix;
             return this;
         }
 

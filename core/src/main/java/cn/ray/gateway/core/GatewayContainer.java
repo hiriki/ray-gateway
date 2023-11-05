@@ -53,7 +53,7 @@ public class GatewayContainer implements LifeCycle {
         if (GatewayBufferHelper.isFlusher(bufferType)) {
             this.nettyProcessor = new NettyBatchEventProcessor(gatewayConfig,nettyCoreProcessor);
         } else if (GatewayBufferHelper.isMpmc(bufferType)) {
-            this.nettyProcessor = new NettyMpMcProcessor(gatewayConfig,nettyCoreProcessor);
+            this.nettyProcessor = new NettyMpMcProcessor(gatewayConfig,nettyCoreProcessor,true);
         } else {
             this.nettyProcessor = nettyCoreProcessor;
         }

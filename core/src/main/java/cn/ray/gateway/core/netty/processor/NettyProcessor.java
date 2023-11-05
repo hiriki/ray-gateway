@@ -13,7 +13,7 @@ public interface NettyProcessor {
      * 核心执行方法
      * @param httpRequestWrapper
      */
-    void process(HttpRequestWrapper httpRequestWrapper);
+    void process(HttpRequestWrapper httpRequestWrapper) throws Exception;
 
     /**
      * 执行器启动方法

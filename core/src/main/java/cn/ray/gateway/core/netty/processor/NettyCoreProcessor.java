@@ -7,7 +7,7 @@ import io.netty.handler.codec.http.FullHttpRequest;
 /**
  * @author Ray
  * @date 2023/10/10 22:56
- * @description
+ * @description 核心处理类，调用执行过滤器逻辑
  */
 public class NettyCoreProcessor implements NettyProcessor {
 
@@ -17,10 +17,9 @@ public class NettyCoreProcessor implements NettyProcessor {
         ChannelHandlerContext ctx = event.getCtx();
         try {
             //	1. 解析FullHttpRequest, 把他转换为我们自己想要的内部对象：Context
-
+            System.err.println("----- 接收请求 -----");
             //	2. 执行整个的过滤器逻辑：FilterChain
-
-            System.err.println("进入过滤器逻辑");
+            System.err.println("----- 进入过滤器逻辑 -----");
         } catch (Throwable t) {
         }
     }

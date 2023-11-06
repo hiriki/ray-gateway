@@ -1,6 +1,7 @@
 package cn.ray.gateway.core;
 
 import cn.ray.gateway.common.constants.BasicConstants;
+import cn.ray.gateway.common.constants.GatewayBufferHelper;
 import cn.ray.gateway.common.utils.NetUtil;
 import com.lmax.disruptor.*;
 import lombok.Data;
@@ -76,7 +77,7 @@ public class GatewayConfig {
     /**
      * 网关队列：缓冲模式
      */
-    private String bufferType = ""; // GatewayBufferHelper.FLUSHER
+    private String bufferType = GatewayBufferHelper.MPMC; // GatewayBufferHelper.FLUSHER
 
     /**
      * 网关队列：内存队列大小

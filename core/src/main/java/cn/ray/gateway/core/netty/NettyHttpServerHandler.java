@@ -47,6 +47,6 @@ public class NettyHttpServerHandler extends ChannelInboundHandlerAdapter {
                 log.error("#NettyHttpServerHandler.channelRead# release fail 资源释放失败");
             }
         }
-        super.channelRead(ctx, msg);
+        // super.channelRead(ctx, msg);
     }
 }

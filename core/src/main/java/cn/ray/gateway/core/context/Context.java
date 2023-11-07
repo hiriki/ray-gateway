@@ -134,8 +134,7 @@ public interface Context {
      * @return
      * @param <T>
      */
-    // TODO 定义上下文参数: AttributeKey
-    <T> T getAttribute(Object key);
+    <T> T getAttribute(AttributeKey<T> key);
 
     /**
      * 保存上下文属性信息
@@ -144,7 +143,7 @@ public interface Context {
      * @return
      * @param <T>
      */
-    <T> T putAttribute(Object key, T value);
+    <T> T putAttribute(AttributeKey<T> key, T value);
 
     /**
      * 获取Netty的上下文对象

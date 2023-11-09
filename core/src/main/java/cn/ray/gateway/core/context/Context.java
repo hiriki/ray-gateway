@@ -1,5 +1,6 @@
 package cn.ray.gateway.core.context;
 
+import cn.ray.gateway.common.config.Rule;
 import io.netty.channel.ChannelHandlerContext;
 
 import java.util.function.Consumer;
@@ -95,8 +96,7 @@ public interface Context {
      * 获取规则
      * @return Rule
      */
-    // TODO 定义规则: Rule
-    Object getRule();
+    Rule getRule();
 
     /**
      * 获取请求对象

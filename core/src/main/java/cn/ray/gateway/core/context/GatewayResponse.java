@@ -88,7 +88,7 @@ public class GatewayResponse {
      * @param data
      * @return
      */
-    public static GatewayResponse buildGatewayResponse(Object data) {
+    public static GatewayResponse buildGatewayResponseObj(Object data) {
         ObjectNode objectNode = JSONUtil.createObjectNode();
         objectNode.put(JSONUtil.STATUS, ResponseCode.SUCCESS.getStatus().code());
         objectNode.put(JSONUtil.CODE, ResponseCode.SUCCESS.getCode());

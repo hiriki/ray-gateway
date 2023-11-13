@@ -5,7 +5,7 @@ import cn.ray.gateway.common.enums.ResponseCode;
 /**
  * @author Ray
  * @date 2023/10/6 06:36
- * @description
+ * @description 所有的响应异常基础定义
  */
 public class GatewayResponseException extends GatewayBaseException {
 

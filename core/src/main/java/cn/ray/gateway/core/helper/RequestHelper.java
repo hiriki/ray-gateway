@@ -6,7 +6,9 @@ import cn.ray.gateway.common.constants.BasicConstants;
 import cn.ray.gateway.common.constants.GatewayConstants;
 import cn.ray.gateway.common.enums.ResponseCode;
 import cn.ray.gateway.common.exception.GatewayNotFoundException;
+import cn.ray.gateway.common.exception.GatewayPathNoMatchedException;
 import cn.ray.gateway.common.exception.GatewayResponseException;
+import cn.ray.gateway.common.utils.AntPathMatcher;
 import cn.ray.gateway.core.context.GatewayContext;
 import cn.ray.gateway.core.context.GatewayRequest;
 import io.netty.channel.ChannelHandlerContext;
@@ -26,6 +28,8 @@ import java.util.List;
  */
 public class RequestHelper {
 
+    private static final AntPathMatcher ANT_PATH_MATCHER = new AntPathMatcher();
+
     /**
      * 解析FullHttpRequest 构建GatewayContext
      * @param fullHttpRequest
@@ -40,6 +44,10 @@ public class RequestHelper {
         //  2.  根据请求对象里的uniqueId，获取资源服务信息(也就是服务定义信息)
         ServiceDefinition serviceDefinition = getServiceDefinition(gatewayRequest);
 
+        //	3.	快速路径匹配失败的策略
+        if (!ANT_PATH_MATCHER.match(serviceDefinition.getPatternPath(), gatewayRequest.getPath())) {
+            throw new GatewayPathNoMatchedException();
+        }
 
         return null;
     }

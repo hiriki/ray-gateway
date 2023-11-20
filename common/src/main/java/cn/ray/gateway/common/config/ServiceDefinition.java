@@ -32,12 +32,13 @@ public class ServiceDefinition implements Serializable {
     private String version;
 
     /**
-     * 服务调用协议
+     * 服务调用协议: http、dubbo
      */
     private String protocol;
 
     /**
-     * 路径匹配规则：访问真实ANT表达式：定义具体的服务路径的匹配规则
+     * 路径匹配规则: 访问真实ANT表达式：定义具体的服务路径的匹配规则:
+     * 比如用户服务: /user/*
      */
     private String patternPath;
 

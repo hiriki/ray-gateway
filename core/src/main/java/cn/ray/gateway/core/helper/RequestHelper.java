@@ -1,8 +1,11 @@
 package cn.ray.gateway.core.helper;
 
+import cn.ray.gateway.common.config.DynamicConfigManager;
+import cn.ray.gateway.common.config.ServiceDefinition;
 import cn.ray.gateway.common.constants.BasicConstants;
 import cn.ray.gateway.common.constants.GatewayConstants;
 import cn.ray.gateway.common.enums.ResponseCode;
+import cn.ray.gateway.common.exception.GatewayNotFoundException;
 import cn.ray.gateway.common.exception.GatewayResponseException;
 import cn.ray.gateway.core.context.GatewayContext;
 import cn.ray.gateway.core.context.GatewayRequest;
@@ -35,6 +38,8 @@ public class RequestHelper {
         GatewayRequest gatewayRequest = doRequest(fullHttpRequest, ctx);
 
         //  2.  根据请求对象里的uniqueId，获取资源服务信息(也就是服务定义信息)
+        ServiceDefinition serviceDefinition = getServiceDefinition(gatewayRequest);
+
 
         return null;
     }
@@ -111,5 +116,14 @@ public class RequestHelper {
         }
 
         return clientIp;
+    }
+
+    private static ServiceDefinition getServiceDefinition(GatewayRequest gatewayRequest) {
+        // 网关初始化从注册中心加载到缓存
+        ServiceDefinition serviceDefinition = DynamicConfigManager.getInstance().getServiceDefinition(gatewayRequest.getUniqueId());
+        if (serviceDefinition == null) {
+            throw new GatewayNotFoundException(ResponseCode.SERVICE_DEFINITION_NOT_FOUND);
+        }
+        return serviceDefinition;
     }
 }

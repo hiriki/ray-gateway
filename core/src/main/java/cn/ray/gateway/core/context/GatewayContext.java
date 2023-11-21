@@ -50,7 +50,7 @@ public class GatewayContext extends BasicContext {
             return this;
         }
 
-        public Builder setRapidRequest(GatewayRequest gatewayRequest) {
+        public Builder setGatewayRequest(GatewayRequest gatewayRequest) {
             this.gatewayRequest = gatewayRequest;
             return this;
         }

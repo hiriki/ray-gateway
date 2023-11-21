@@ -1,5 +1,7 @@
 package cn.ray.gateway.core.context;
 
+import cn.ray.gateway.common.config.ServiceInvoker;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -15,8 +17,14 @@ public abstract class AttributeKey<T> {
 
     public static final AttributeKey<Set<String>> MATCH_ADDRESS = create(Set.class);
 
+    public static final AttributeKey<ServiceInvoker> HTTP_INVOKER = create(ServiceInvoker.class);
+
+    public static final AttributeKey<ServiceInvoker> DUBBO_INVOKER = create(ServiceInvoker.class);
+
     static {
         NAMED_MAP.put("MATCH_ADDRESS", MATCH_ADDRESS);
+        NAMED_MAP.put("HTTP_INVOKER", HTTP_INVOKER);
+        NAMED_MAP.put("DUBBO_INVOKER", DUBBO_INVOKER);
     }
 
     /**

@@ -5,7 +5,7 @@ import cn.ray.gateway.core.context.Context;
 /**
  * @author Ray
  * @date 2023/11/22 22:54
- * @description 过滤器抽象类, 定义一些基础逻辑操作
+ * @description 过滤器抽象类, 定义一些基础逻辑操作，相当于链表元素
  */
 public abstract class AbstractLinkedProcessorFilter<T> implements ProcessorFilter<Context> {
 
@@ -16,11 +16,11 @@ public abstract class AbstractLinkedProcessorFilter<T> implements ProcessorFilte
 
     @Override
     public void fireNext(Context context, Object... args) throws Throwable {
-        if (next != null) {     // 过滤器存在且不为最后一个过滤器
-            if (!next.check(context)) {     // 过滤器不需要执行
-                next.fireNext(context, args);   // 递归判断下一节点
+        if (this.next != null) {     // 过滤器存在且不为最后一个过滤器
+            if (!this.next.check(context)) {     // 过滤器不需要执行
+                this.next.fireNext(context, args);   // 递归判断下一节点
             } else {
-                next.transformEntry(context, args);
+                this.next.transformEntry(context, args);
             }
         }
     }

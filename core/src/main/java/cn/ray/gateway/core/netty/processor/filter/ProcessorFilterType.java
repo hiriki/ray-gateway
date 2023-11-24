@@ -11,9 +11,9 @@ public enum ProcessorFilterType {
 
     ROUTE("ROUTE", "中置过滤器"),
 
-    ERROR("ERROR", "前置过滤器"),
+    ERROR("ERROR", "异常过滤器"),
 
-    POST("POST", "前置过滤器");
+    POST("POST", "后置过滤器");
 
     private final String code;
 

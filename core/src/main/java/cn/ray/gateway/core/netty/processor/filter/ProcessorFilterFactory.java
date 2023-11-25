@@ -35,12 +35,12 @@ public interface ProcessorFilterFactory {
 
     /**
      * 获取指定类型的过滤器
-     * @param t
+     * @param clazz
      * @return
      * @param <T>
      * @throws Exception
      */
-    <T> T getFilter(Class<T> t) throws Exception;
+    <T> T getFilter(Class<T> clazz) throws Exception;
 
     /**
      * 获取指定ID的过滤器

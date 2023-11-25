@@ -9,6 +9,12 @@ import cn.ray.gateway.core.context.Context;
  */
 public class DefaultProcessorFilterChain extends ProcessorFilterChain<Context> {
 
+    private final String id;
+
+    public DefaultProcessorFilterChain(String id) {
+        this.id = id;
+    }
+
     /**
      * 虚拟头节点
      */
@@ -73,5 +79,9 @@ public class DefaultProcessorFilterChain extends ProcessorFilterChain<Context> {
     @Override
     public void setNext(AbstractLinkedProcessorFilter<Context> filter) {
         addLast(filter);
+    }
+
+    public String getId() {
+        return id;
     }
 }

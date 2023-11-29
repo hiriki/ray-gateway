@@ -5,7 +5,7 @@ import cn.ray.gateway.core.context.Context;
 /**
  * @author Ray
  * @date 2023/11/22 22:54
- * @description 过滤器抽象类, 定义一些基础逻辑操作，相当于链表元素
+ * @description 过滤器抽象类, 定义一些基础操作，相当于链表元素
  */
 public abstract class AbstractLinkedProcessorFilter<T> implements ProcessorFilter<Context> {
 

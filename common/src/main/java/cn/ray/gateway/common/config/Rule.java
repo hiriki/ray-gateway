@@ -70,7 +70,7 @@ public class Rule implements Comparable<Rule>, Serializable {
      * @param id
      * @return
      */
-    public boolean hashId(String id) {
+    public boolean hasFilterId(String id) {
         for(Rule.FilterConfig filterConfig : filterConfigs) {
             if(filterConfig.getId().equalsIgnoreCase(id)) {
                 return true;

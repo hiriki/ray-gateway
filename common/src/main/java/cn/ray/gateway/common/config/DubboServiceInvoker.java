@@ -10,7 +10,7 @@ public class DubboServiceInvoker extends AbstractServiceInvoker {
     /**
      * 注册中心地址
      */
-    private String registerAddress;
+    private String registryAddress;
 
     /**
      * 接口全类名
@@ -32,12 +32,12 @@ public class DubboServiceInvoker extends AbstractServiceInvoker {
      */
     private String version;
 
-    public String getRegisterAddress() {
-        return registerAddress;
+    public String getRegistryAddress() {
+        return registryAddress;
     }
 
-    public void setRegisterAddress(String registerAddress) {
-        this.registerAddress = registerAddress;
+    public void setRegistryAddress(String registryAddress) {
+        this.registryAddress = registryAddress;
     }
 
     public String getInterfaceClass() {

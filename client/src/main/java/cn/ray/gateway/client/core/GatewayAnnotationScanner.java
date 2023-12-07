@@ -34,6 +34,12 @@ public class GatewayAnnotationScanner {
         return SingletonHolder.INSTANCE;
     }
 
+    /**
+     * 扫描传入的Bean对象，最终返回一个ServiceDefinition
+     * @param bean
+     * @param args
+     * @return
+     */
     public synchronized ServiceDefinition scanBuilder(Object bean, Object... args) {
         Class<?> clazz = bean.getClass();
         boolean isPresent = clazz.isAnnotationPresent(GatewayService.class);
@@ -68,10 +74,11 @@ public class GatewayAnnotationScanner {
                             DubboServiceInvoker dubboServiceInvoker = createDubboServiceInvoker(path, serviceBean, method);
                             String dubboVersion = dubboServiceInvoker.getVersion();
 
-                            // 将服务版本修正为 dubbo 版本
+                            // 将服务定义版本修正为 dubbo 版本
                             if (!StringUtils.isBlank(dubboVersion)) {
                                 version = dubboVersion;
                             }
+
                             invokerMap.put(path, dubboServiceInvoker);
                             break;
                         default:
@@ -80,7 +87,7 @@ public class GatewayAnnotationScanner {
                 }
             }
 
-            // 服务实例唯一ID: serviceId:version
+            // 服务定义唯一ID: serviceId:version
             serviceDefinition.setUniqueId(serviceId + BasicConstants.COLON_SEPARATOR + version);
             // 服务唯一ID
             serviceDefinition.setServiceId(serviceId);
@@ -90,7 +97,7 @@ public class GatewayAnnotationScanner {
             serviceDefinition.setProtocol(protocol.getCode());
             // ANT 路径匹配
             serviceDefinition.setPatternPath(patternPath);
-            // TODO: 服务默认开启, 后续支持在注解中配置 enable = true / false
+            // TODO: 服务默认开启, 后续可支持在注解中配置 enable = true / false
             serviceDefinition.setEnable(true);
             // 服务调用列表信息
             serviceDefinition.setInvokerMap(invokerMap);
@@ -131,12 +138,12 @@ public class GatewayAnnotationScanner {
         // 方法名
         String methodName = method.getName();
         // 注册中心地址
-        String registerAddress = serviceBean.getRegistry().getAddress();
+        String registryAddress = serviceBean.getRegistry().getAddress();
         // 接口全类名
         String interfaceClass = serviceBean.getInterface();
 
         dubboServiceInvoker.setMethodName(methodName);
-        dubboServiceInvoker.setRegisterAddress(registerAddress);
+        dubboServiceInvoker.setRegistryAddress(registryAddress);
         dubboServiceInvoker.setInterfaceClass(interfaceClass);
 
         // 参数类型名

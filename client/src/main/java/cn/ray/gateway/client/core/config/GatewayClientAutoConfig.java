@@ -34,14 +34,14 @@ public class GatewayClientAutoConfig {
     @ConditionalOnMissingBean(SpringMVCClientRegistryManager.class)
     // 如果在之前已经存在就不需要再加载了
     // 可以在Spring Bean的生命周期上就进行注入
-    public SpringMVCClientRegistryManager springMVCClientRegistryManager() {
+    public SpringMVCClientRegistryManager springMVCClientRegistryManager() throws Exception {
         return new SpringMVCClientRegistryManager(gatewayClientProperties);
     }
 
     @Bean
     @ConditionalOnClass({ServiceBean.class})
     @ConditionalOnMissingBean(Dubbo27ClientRegistryManager.class)
-    public Dubbo27ClientRegistryManager dubbo27ClientRegistryManager() {
+    public Dubbo27ClientRegistryManager dubbo27ClientRegistryManager() throws Exception {
         return new Dubbo27ClientRegistryManager(gatewayClientProperties);
     }
 }

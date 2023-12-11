@@ -46,7 +46,7 @@ public class SpringMVCClientRegistryManager extends AbstractClientRegistryManage
 
     private static final Set<Object> uniqueBeanSet = new HashSet<>();
 
-    public SpringMVCClientRegistryManager(GatewayClientProperties gatewayClientProperties) {
+    public SpringMVCClientRegistryManager(GatewayClientProperties gatewayClientProperties) throws Exception {
         super(gatewayClientProperties);
     }
 

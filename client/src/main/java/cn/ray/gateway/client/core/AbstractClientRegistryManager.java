@@ -3,6 +3,11 @@ package cn.ray.gateway.client.core;
 import cn.ray.gateway.client.core.config.GatewayClientProperties;
 import cn.ray.gateway.common.config.ServiceDefinition;
 import cn.ray.gateway.common.config.ServiceInstance;
+import cn.ray.gateway.common.constants.BasicConstants;
+import cn.ray.gateway.common.utils.FastJsonConvertUtil;
+import cn.ray.gateway.common.utils.ServiceLoader;
+import cn.ray.gateway.discovery.api.Registry;
+import cn.ray.gateway.discovery.api.RegistryService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 
@@ -13,7 +18,7 @@ import java.util.Properties;
 /**
  * @author Ray
  * @date 2023/12/7 16:35
- * @description 抽象注册管理器
+ * @description 抽象注册管理器, 提供构建顶级目录以及注册服务定义实例方法等通用方法
  */
 @Slf4j
 public abstract class AbstractClientRegistryManager {
@@ -36,7 +41,16 @@ public abstract class AbstractClientRegistryManager {
 
     public static Properties properties = new Properties();
 
-    // TODO: 注册中心相关常量
+    // 注册中心相关常量
+    protected static String superPath;
+
+    protected static String servicesPath;
+
+    protected static String instancesPath;
+
+    protected static String rulesPath;
+
+    private RegistryService registryService;
 
     //	静态代码块, 类加载时读取 gateway.properties 配置文件
     static {
@@ -76,7 +90,7 @@ public abstract class AbstractClientRegistryManager {
      * application.properties/yml 优先级是最高的
      * @param gatewayClientProperties
      */
-    protected AbstractClientRegistryManager(GatewayClientProperties gatewayClientProperties) {
+    protected AbstractClientRegistryManager(GatewayClientProperties gatewayClientProperties) throws Exception {
         //	1. 初始化加载配置信息
         if (gatewayClientProperties.getRegistryAddress() != null) {
             registryAddress = gatewayClientProperties.getRegistryAddress();
@@ -87,16 +101,49 @@ public abstract class AbstractClientRegistryManager {
             env = gatewayClientProperties.getEnv();
         }
 
-        // TODO: 2. 初始化加载注册中心对象
+        //  2. 初始化加载注册中心对象
+        ServiceLoader<RegistryService> serviceLoader = ServiceLoader.load(RegistryService.class);
+        for(RegistryService registryService : serviceLoader) {
+            registryService.initialized(gatewayClientProperties.getRegistryAddress());
+            this.registryService = registryService;
+        }
+
+        //	3. 注册构建顶级目录结构
+        generateStructPath(Registry.PATH + namespace + BasicConstants.BAR_SEPARATOR + env);
     }
 
     /**
      * 注册顶级结构目录路径，只需要构建一次即可
+     *
      * @param path
      * @throws Exception
      */
-    private void generatorStructPath(String path) throws Exception {
+    private void generateStructPath(String path) throws Exception {
+        /**
+         * 	/ray-gateway-env
+         * 		/services
+         * 			/serviceA:1.0.0  ==> ServiceDefinition
+         * 			/serviceA:2.0.0
+         * 			/serviceB:1.0.0
+         * 		/instances
+         * 			/serviceA:1.0.0/192.168.11.100:port	 ==> ServiceInstance
+         * 			/serviceA:1.0.0/192.168.11.101:port
+         * 			/serviceB:1.0.0/192.168.11.102:port
+         * 			/serviceA:2.0.0/192.168.11.103:port
+         * 		/rules
+         * 			/ruleId1	==>	Rule
+         * 			/ruleId2
+         * 		/gateway
+         */
+        superPath = path;
+        servicesPath = superPath + Registry.SERVICE_PREFIX;
+        instancesPath = superPath + Registry.INSTANCE_PREFIX;
+        rulesPath = superPath + Registry.RULE_PREFIX;
 
+        registryService.registerPathIfNotExists(superPath, "", true);
+        registryService.registerPathIfNotExists(servicesPath, "", true);
+        registryService.registerPathIfNotExists(instancesPath, "", true);
+        registryService.registerPathIfNotExists(rulesPath, "", true);
     }
 
     /**
@@ -105,7 +152,14 @@ public abstract class AbstractClientRegistryManager {
      * @throws Exception
      */
     protected void registerServiceDefinition(ServiceDefinition serviceDefinition) throws Exception {
+        String key = servicesPath
+                + Registry.PATH
+                + serviceDefinition.getUniqueId();
 
+        if (!registryService.isExist(key)) {
+            String value = FastJsonConvertUtil.convertObjectToJSON(serviceDefinition);
+            registryService.registerPathIfNotExists(key, value, true);
+        }
     }
 
     /**
@@ -114,7 +168,16 @@ public abstract class AbstractClientRegistryManager {
      * @throws Exception
      */
     protected void registerServiceInstance(ServiceInstance serviceInstance) throws Exception {
+        String key = instancesPath
+                + Registry.PATH
+                + serviceInstance.getUniqueId()
+                + Registry.PATH
+                + serviceInstance.getServiceInstanceId();
 
+        if (!registryService.isExist(key)) {
+            String value = FastJsonConvertUtil.convertObjectToJSON(serviceInstance);
+            registryService.registerPathIfNotExists(key, value, false);
+        }
     }
 
     public static String getRegistryAddress() {
@@ -127,5 +190,21 @@ public abstract class AbstractClientRegistryManager {
 
     public static String getEnv() {
         return env;
+    }
+
+    public static String getSuperPath() {
+        return superPath;
+    }
+
+    public static String getServicesPath() {
+        return servicesPath;
+    }
+
+    public static String getInstancesPath() {
+        return instancesPath;
+    }
+
+    public static String getRulesPath() {
+        return rulesPath;
     }
 }

@@ -35,7 +35,7 @@ public class Dubbo27ClientRegistryManager extends AbstractClientRegistryManager 
 
     private static final Set<Object> uniqueBeanSet = new HashSet<>();
 
-    public Dubbo27ClientRegistryManager(GatewayClientProperties gatewayClientProperties) {
+    public Dubbo27ClientRegistryManager(GatewayClientProperties gatewayClientProperties) throws Exception{
         super(gatewayClientProperties);
     }
 

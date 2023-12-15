@@ -44,6 +44,9 @@ public class EtcdClientImpl implements EtcdClient {
 
     private Watch watchClient;
 
+    /**
+     * 公有租约, 相当于心跳, 随着客户端关闭停止续租
+     */
     private long leaseId;
 
     private HeartBeatLeaseTimeoutListener heartBeatLeaseTimeoutListener;

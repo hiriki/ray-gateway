@@ -17,7 +17,7 @@ public class EtcdImplTest {
     @Test
     public void test() throws Exception {
 
-        String registryAddress = "http://121.40.137.133:20000,http://121.40.137.133:20002,http://121.40.137.133:20004";
+        String registryAddress = "#";
 
         EtcdClient etcdClient = new EtcdClientImpl(registryAddress, true);
 

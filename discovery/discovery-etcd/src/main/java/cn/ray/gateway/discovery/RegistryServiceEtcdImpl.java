@@ -94,6 +94,7 @@ public class RegistryServiceEtcdImpl implements RegistryService {
             }
         }
     }
+
     @Override
     public void registerPathIfNotExists(String path, String value, boolean isPermanent) throws Exception {
         if (!isExist(path)) {

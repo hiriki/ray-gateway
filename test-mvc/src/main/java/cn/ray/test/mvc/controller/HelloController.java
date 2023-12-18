@@ -25,11 +25,6 @@ public class HelloController {
     @GatewayInvoker(path = "/testGet")
     @GetMapping("/testGet")
     public String testGet() {
-        System.out.println(applicationContext.containsBean("gatewayClientProperties"));
-        System.out.println(applicationContext.containsBean("SpringMVCClientRegistryManager"));
-        System.out.println(applicationContext.containsBean("springMVCClientRegistryManager"));
-        System.out.println(applicationContext.containsBean("dubbo27ClientRegistryManager"));
-        System.out.println(applicationContext.containsBean("Dubbo27ClientRegistryManager"));
         return "testGet";
     }
 

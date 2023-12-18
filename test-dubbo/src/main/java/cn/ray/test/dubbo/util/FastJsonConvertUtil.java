@@ -1,4 +1,4 @@
-package cn.ray.gateway.common.utils;
+package cn.ray.test.dubbo.util;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  * @author Ray
- * @date 2023/12/11 20:05
+ * @date 2023/12/15 22:40
  * @description
  */
 public class FastJsonConvertUtil {
@@ -123,5 +123,5 @@ public class FastJsonConvertUtil {
             return null;
         }
     }
-
+    
 }

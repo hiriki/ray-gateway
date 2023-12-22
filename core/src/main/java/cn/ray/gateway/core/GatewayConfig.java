@@ -27,7 +27,7 @@ public class GatewayConfig {
     /**
      * 网关的注册中心地址 etcd
      */
-    private String registerAddress = "http://192.168.11.114:2379,http://192.168.11.115:2379,http://192.168.11.116:2379";
+    private String registryAddress = "#";
 
     /**
      * 网关的命名空间：dev test prod

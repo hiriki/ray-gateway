@@ -222,11 +222,83 @@ public class RegistryManager {
         @Override
         public void put(String key, String value) throws Exception {
             countDownLatch.await();
+            if (servicesPath.equals(key) ||
+                    instancesPath.equals(key) ||
+                    rulesPath.equals(key) ||
+                    gatewaysPath.equals(key)) {
+                return;
+            }
+
+            //	如果是服务定义发生变更：
+            if(key.contains(servicesPath)) {
+                String uniqueId = key.substring(servicesPath.length() + 1);
+                ServiceDefinition serviceDefinition = parseServiceDefinition(value);
+                DynamicConfigManager.getInstance().putServiceDefinition(uniqueId, serviceDefinition);
+                return;
+            }
+
+            //	如果是服务实例发生变更：
+            if(key.contains(instancesPath)) {
+                //	 /ray-gateway-dev/instances/
+                //	          hello:1.0.0/ 192.168.11.100:1234
+                String temp = key.substring(instancesPath.length() + 1);
+                String[] tempArray = temp.split(Registry.PATH);
+                if(tempArray.length == 2) {
+                    String uniqueId = tempArray[0];
+                    ServiceInstance serviceInstance = FastJsonConvertUtil.convertJSONToObject(value, ServiceInstance.class);
+                    DynamicConfigManager.getInstance().updateServiceInstance(uniqueId, serviceInstance);
+                }
+                return;
+            }
+
+            //	如果是规则发生变更：
+            if(key.contains(rulesPath)) {
+                String ruleId = key.substring(rulesPath.length() + 1);
+                Rule rule = FastJsonConvertUtil.convertJSONToObject(value, Rule.class);
+                DynamicConfigManager.getInstance().putRule(ruleId, rule);
+                return;
+            }
         }
 
         @Override
         public void delete(String key) throws Exception {
             countDownLatch.await();
+
+            if (servicesPath.equals(key) ||
+                    instancesPath.equals(key) ||
+                    rulesPath.equals(key) ||
+                    gatewaysPath.equals(key)) {
+                return;
+            }
+
+            //	如果是服务定义发生变更：
+            if(key.contains(servicesPath)) {
+                String uniqueId = key.substring(servicesPath.length() + 1);
+                DynamicConfigManager.getInstance().removeServiceDefinition(uniqueId);
+                DynamicConfigManager.getInstance().removeServiceInstances(uniqueId);
+                return;
+            }
+
+            //	如果是服务实例发生变更：
+            if(key.contains(instancesPath)) {
+                //	 /ray-gateway-dev/instances/
+                //	          hello:1.0.0/ 192.168.11.100:1234
+                String temp = key.substring(instancesPath.length() + 1);
+                String[] tempArray = temp.split(Registry.PATH);
+                if(tempArray.length == 2) {
+                    String uniqueId = tempArray[0];
+                    String serviceInstanceId = tempArray[1];
+                    DynamicConfigManager.getInstance().removeServiceInstance(uniqueId, serviceInstanceId);
+                }
+                return;
+            }
+
+            //	如果是规则发生变更：
+            if(key.contains(rulesPath)) {
+                String ruleId = key.substring(rulesPath.length() + 1);
+                DynamicConfigManager.getInstance().removeRule(ruleId);
+                return;
+            }
         }
     }
 

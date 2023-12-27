@@ -90,6 +90,18 @@ public class DynamicConfigManager {
         }
     }
 
+    public void removeServiceInstance(String uniqueId, String serviceInstanceId) {
+        Set<ServiceInstance> set = serviceInstanceMap.get(uniqueId);
+        Iterator<ServiceInstance> it = set.iterator();
+        while(it.hasNext()) {
+            ServiceInstance is = it.next();
+            if(is.getServiceInstanceId().equals(serviceInstanceId)) {
+                it.remove();
+                break;
+            }
+        }
+    }
+
     public void removeServiceInstances(String uniqueId) {
         serviceInstanceMap.remove(uniqueId);
     }

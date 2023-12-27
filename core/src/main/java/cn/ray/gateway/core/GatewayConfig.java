@@ -30,9 +30,14 @@ public class GatewayConfig {
     private String registryAddress = "#";
 
     /**
-     * 网关的命名空间：dev test prod
+     * 网关的命名空间
      */
-    private String namespace = "gateway-dev";
+    private String namespace = "ray-gateway";
+
+    /**
+     * 网关环境: dev test prod
+     */
+    private String env = "dev";
 
     /**
      * 网关服务器的 CPU 核数映射的线程数

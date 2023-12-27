@@ -2,6 +2,7 @@ package cn.ray.gateway.core.discovery;
 
 import cn.ray.gateway.common.config.*;
 import cn.ray.gateway.common.constants.BasicConstants;
+import cn.ray.gateway.common.constants.GatewayConstants;
 import cn.ray.gateway.common.constants.GatewayProtocol;
 import cn.ray.gateway.common.utils.FastJsonConvertUtil;
 import cn.ray.gateway.common.utils.Pair;
@@ -55,7 +56,7 @@ public class RegistryManager {
         this.gatewayConfig = gatewayConfig;
 
         //	1. 路径的设置
-        superPath = Registry.PATH + gatewayConfig.getNamespace() + BasicConstants.BAR_SEPARATOR ;
+        superPath = Registry.PATH + gatewayConfig.getNamespace() + BasicConstants.BAR_SEPARATOR + gatewayConfig.getEnv() ;
         servicesPath = superPath + Registry.SERVICE_PREFIX;
         instancesPath = superPath + Registry.INSTANCE_PREFIX;
         rulesPath = superPath + Registry.RULE_PREFIX;
@@ -122,13 +123,17 @@ public class RegistryManager {
                 List<Pair<String, String>> instanceList = this.registryService.getListByPrefixPath(serviceInstancePrefix);
                 Set<ServiceInstance> serviceInstanceSet = new HashSet<>();
                 for(Pair<String, String> instance : instanceList) {
-                    String instancePath = instance.getObject1();
+                    // String instancePath = instance.getObject1();
                     String instanceJson = instance.getObject2();
 
                     // 排除当前服务实例的根目录 instancePath = /ray-gateway-dev/instances/hello:1.0.0
-                    if (instancePath.equals(serviceInstancePrefix)) {
-                        continue;
-                    }
+                    // 经测试查看, 多个实例没有该根目录: /ray-gateway-dev/instances/hello:1.0.0
+                    // /ray-gateway-dev/instances
+                    //          /hello:1.0.0/192.168.11.100:1234
+                    //          /hello:1.0.0/192.168.11.100:4321
+//                    if (instancePath.equals(serviceInstancePrefix)) {
+//                        continue;
+//                    }
 
                     ServiceInstance serviceInstance = FastJsonConvertUtil.convertJSONToObject(instanceJson, ServiceInstance.class);
                     serviceInstanceSet.add(serviceInstance);
@@ -179,16 +184,16 @@ public class RegistryManager {
         ServiceDefinition serviceDefinition = new ServiceDefinition();
 
         //	填充serviceDefinition
-        serviceDefinition.setUniqueId((String)jsonMap.get("uniqueId"));
-        serviceDefinition.setServiceId((String)jsonMap.get("serviceId"));
-        serviceDefinition.setProtocol((String)jsonMap.get("protocol"));
-        serviceDefinition.setPatternPath((String)jsonMap.get("patternPath"));
-        serviceDefinition.setVersion((String)jsonMap.get("version"));
-        serviceDefinition.setEnable((boolean)jsonMap.get("enable"));
-        serviceDefinition.setEnvType((String)jsonMap.get("envType"));
+        serviceDefinition.setUniqueId((String)jsonMap.get(GatewayConstants.UNIQUE_ID));
+        serviceDefinition.setServiceId((String)jsonMap.get(GatewayConstants.SERVICE_ID));
+        serviceDefinition.setProtocol((String)jsonMap.get(GatewayConstants.PROTOCOL_KEY));
+        serviceDefinition.setPatternPath((String)jsonMap.get(GatewayConstants.PATTERN_PATH_KEY));
+        serviceDefinition.setVersion((String)jsonMap.get(GatewayConstants.VERSION_KEY));
+        serviceDefinition.setEnable((boolean)jsonMap.get(GatewayConstants.ENABLE_KEY));
+        serviceDefinition.setEnvType((String)jsonMap.get(GatewayConstants.ENV_KEY));
 
         Map<String, ServiceInvoker> invokerMap = new HashMap<>();
-        JSONObject jsonInvokerMap = (JSONObject)jsonMap.get("invokerMap");
+        JSONObject jsonInvokerMap = (JSONObject)jsonMap.get(GatewayConstants.INVOKER_MAP_KEY);
 
         switch (serviceDefinition.getProtocol()) {
             case GatewayProtocol.HTTP:
@@ -222,6 +227,7 @@ public class RegistryManager {
         @Override
         public void put(String key, String value) throws Exception {
             countDownLatch.await();
+
             if (servicesPath.equals(key) ||
                     instancesPath.equals(key) ||
                     rulesPath.equals(key) ||
@@ -319,8 +325,8 @@ public class RegistryManager {
         }
 
         public void registerSelf() throws Exception {
-            String rapidConfigJson = FastJsonConvertUtil.convertObjectToJSON(gatewayConfig);
-            this.registryService.registerPathIfNotExists(selfPath, rapidConfigJson, false);
+            String gatewayConfigJson = FastJsonConvertUtil.convertObjectToJSON(gatewayConfig);
+            this.registryService.registerPathIfNotExists(selfPath, gatewayConfigJson, false);
         }
     }
 

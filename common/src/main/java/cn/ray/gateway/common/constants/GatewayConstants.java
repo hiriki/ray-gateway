@@ -11,9 +11,21 @@ public interface GatewayConstants {
 
     String UNIQUE_ID = "uniqueId";
 
-    String DEFAULT_VERSION = "1.0.0";
+    String SERVICE_ID = "serviceId";
 
     String PROTOCOL_KEY = "protocol";
+
+    String PATTERN_PATH_KEY = "patternPath";
+
+    String VERSION_KEY = "version";
+
+    String ENABLE_KEY = "enable";
+
+    String ENV_KEY = "envType";
+
+    String INVOKER_MAP_KEY = "invokerMap";
+
+    String DEFAULT_VERSION = "1.0.0";
 
     /**
      * 	默认的实例权重为100

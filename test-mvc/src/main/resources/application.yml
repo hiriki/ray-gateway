@@ -4,6 +4,6 @@ server:
   port: 8083
 
 ray-gateway:
-  registryAddress: #
+  registryAddress: http://#:20000,http://#:20002,http://#:20004
   namespace: ray-gateway
   env: dev

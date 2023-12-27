@@ -54,10 +54,10 @@ public class RegistryServiceEtcdImpl implements RegistryService {
      * 服务变更 添加监听
      * @param superPath 父节点目录
      * @param notify 监听函数
-     * @see cn.ray.gateway.discovery.api.RegistryService#addWatcher(java.lang.String, cn.ray.gateway.discovery.api.Notify)
+     * @see cn.ray.gateway.discovery.api.RegistryService#addWatchers(java.lang.String, cn.ray.gateway.discovery.api.Notify)
      */
     @Override
-    public void addWatcher(String superPath, Notify notify) {
+    public void addWatchers(String superPath, Notify notify) {
         this.etcdClient.addWatcherListener(superPath + Registry.SERVICE_PREFIX, true, new InnerWatcherListener(notify));
         this.etcdClient.addWatcherListener(superPath + Registry.INSTANCE_PREFIX, true, new InnerWatcherListener(notify));
         this.etcdClient.addWatcherListener(superPath + Registry.RULE_PREFIX, true, new InnerWatcherListener(notify));

@@ -12,7 +12,7 @@ public interface RegistryService extends Registry {
      * @param superPath 父节点目录
      * @param notify 监听函数
      */
-    void addWatcher(String superPath, Notify notify);
+    void addWatchers(String superPath, Notify notify);
 
     /**
      * 初始化注册服务

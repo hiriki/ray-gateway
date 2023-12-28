@@ -1,5 +1,6 @@
 package cn.ray.gateway.core.context;
 
+import cn.ray.gateway.common.config.ServiceInstance;
 import cn.ray.gateway.common.config.ServiceInvoker;
 
 import java.util.HashMap;
@@ -15,14 +16,22 @@ public abstract class AttributeKey<T> {
 
     private static final Map<String, AttributeKey<?>> NAMED_MAP = new HashMap<>();
 
-    public static final AttributeKey<Set<String>> MATCH_ADDRESS = create(Set.class);
+    /**
+     * 存储所有服务实例的列表信息，负载均衡使用
+     */
+    public static final AttributeKey<Set<ServiceInstance>> MATCH_INSTANCES = create(Set.class);
+
+    /**
+     * 负载均衡后的实例信息
+     */
+    public static final AttributeKey<ServiceInstance> LOAD_INSTANCE = create(ServiceInstance.class);
 
     public static final AttributeKey<ServiceInvoker> HTTP_INVOKER = create(ServiceInvoker.class);
 
     public static final AttributeKey<ServiceInvoker> DUBBO_INVOKER = create(ServiceInvoker.class);
 
     static {
-        NAMED_MAP.put("MATCH_ADDRESS", MATCH_ADDRESS);
+        NAMED_MAP.put("MATCH_INSTANCES", MATCH_INSTANCES);
         NAMED_MAP.put("HTTP_INVOKER", HTTP_INVOKER);
         NAMED_MAP.put("DUBBO_INVOKER", DUBBO_INVOKER);
     }

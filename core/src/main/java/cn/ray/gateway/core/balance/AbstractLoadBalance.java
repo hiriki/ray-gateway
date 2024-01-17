@@ -43,6 +43,11 @@ public abstract class AbstractLoadBalance implements LoadBalance {
      */
     protected abstract ServiceInstance doSelect(GatewayContext context, List<ServiceInstance> instances);
 
+    /**
+     * 获取服务实例权重
+     * @param instance
+     * @return
+     */
     protected static int getWeight(ServiceInstance instance) {
         int weight = instance.getWeight() == null ? LoadBalance.DEFAULT_WEIGHT : instance.getWeight();
         if(weight > 0) {

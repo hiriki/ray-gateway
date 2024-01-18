@@ -2,6 +2,7 @@ package cn.ray.gateway.core.context;
 
 import cn.ray.gateway.common.config.ServiceInstance;
 import cn.ray.gateway.common.config.ServiceInvoker;
+import cn.ray.gateway.common.enums.LoadBalanceStrategy;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,6 +17,10 @@ public abstract class AttributeKey<T> {
 
     private static final Map<String, AttributeKey<?>> NAMED_MAP = new HashMap<>();
 
+    public static final AttributeKey<ServiceInvoker> HTTP_INVOKER = create(ServiceInvoker.class);
+
+    public static final AttributeKey<ServiceInvoker> DUBBO_INVOKER = create(ServiceInvoker.class);
+
     /**
      * 存储所有服务实例的列表信息，负载均衡使用
      */
@@ -26,14 +31,17 @@ public abstract class AttributeKey<T> {
      */
     public static final AttributeKey<ServiceInstance> LOAD_INSTANCE = create(ServiceInstance.class);
 
-    public static final AttributeKey<ServiceInvoker> HTTP_INVOKER = create(ServiceInvoker.class);
-
-    public static final AttributeKey<ServiceInvoker> DUBBO_INVOKER = create(ServiceInvoker.class);
+    /**
+     * dubbo负载均衡的策略使用
+     */
+    public static final AttributeKey<LoadBalanceStrategy> DUBBO_LOAD_BALANCE_STRATEGY = create(LoadBalanceStrategy.class);
 
     static {
-        NAMED_MAP.put("MATCH_INSTANCES", MATCH_INSTANCES);
         NAMED_MAP.put("HTTP_INVOKER", HTTP_INVOKER);
         NAMED_MAP.put("DUBBO_INVOKER", DUBBO_INVOKER);
+        NAMED_MAP.put("MATCH_INSTANCES", MATCH_INSTANCES);
+        NAMED_MAP.put("LOAD_INSTANCE", LOAD_INSTANCE);
+        NAMED_MAP.put("DUBBO_LOAD_BALANCE_STRATEGY", DUBBO_LOAD_BALANCE_STRATEGY);
     }
 
     /**

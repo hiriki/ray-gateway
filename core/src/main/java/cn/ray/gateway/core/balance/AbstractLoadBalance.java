@@ -18,7 +18,7 @@ public abstract class AbstractLoadBalance implements LoadBalance {
     @Override
     public ServiceInstance select(GatewayContext context) {
 
-        // TODO MATCH_INSTANCES：服务实例列表目前还没有填充，需要LoadBalancePreFilter的时候进行获取并设置
+        // MATCH_INSTANCES：服务实例列表, 在 LoadBalancePreFilter 的时候进行获取并设置
         Set<ServiceInstance> matchInstance = context.getAttribute(AttributeKey.MATCH_INSTANCES);
 
         if(matchInstance == null || matchInstance.isEmpty()) {
@@ -30,9 +30,11 @@ public abstract class AbstractLoadBalance implements LoadBalance {
             return instances.get(0);
         }
 
+        // 获取负载均衡后的实例信息, 并放入网关上下文中, 便于服务调用
         ServiceInstance instance = doSelect(context, instances);
         context.putAttribute(AttributeKey.LOAD_INSTANCE, instance);
-        return null;
+
+        return instance;
     }
 
     /**

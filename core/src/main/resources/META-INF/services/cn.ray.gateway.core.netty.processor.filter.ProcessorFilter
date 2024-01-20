@@ -1,8 +1,9 @@
 ## pre
+cn.ray.gateway.core.netty.processor.filter.pre.LoadBalancePreFilter
 cn.ray.gateway.core.netty.processor.filter.pre.TimeoutPreFilter
 
 ## route
-
+cn.ray.gateway.core.netty.processor.filter.route.HttpRouteFilter
 
 ## post
 

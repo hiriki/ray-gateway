@@ -285,7 +285,7 @@ public class GatewayRequest implements GatewayRequestMutable {
     }
 
     @Override
-    public String getFinalUrl() {
+    public String  getFinalUrl() {
         return modifyScheme + modifyHost + modifyPath;
     }
 

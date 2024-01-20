@@ -7,11 +7,15 @@ package cn.ray.gateway.common.constants;
  */
 public interface ProcessorFilterConstants {
 
+    String LOAD_BALANCE_PRE_FILTER_ID = "loadBalancePreFilter";
+    String LOAD_BALANCE_PRE_FILTER_NAME = "负载均衡前置过滤器";
+    int LOAD_BALANCE_PRE_FILTER_ORDER = 2000;
+
     String TIMEOUT_PRE_FILTER_ID = "timeoutPreFilter";
     String TIMEOUT_PRE_FILTER_NAME = "超时前置过滤器";
     int TIMEOUT_PRE_FILTER_ORDER = 2100;
 
-    String LOAD_BALANCE_PRE_FILTER_ID = "loadBalancePreFilter";
-    String LOAD_BALANCE_PRE_FILTER_NAME = "负载均衡前置过滤器";
-    int LOAD_BALANCE_PRE_FILTER_ORDER = 2000;
+    String HTTP_ROUTE_FILTER_ID = "httpRouteFilter";
+    String HTTP_ROUTE_FILTER_NAME = "HTTP请求转发过滤器";
+    int HTTP_ROUTE_FILTER_ORDER = 5000;
 }

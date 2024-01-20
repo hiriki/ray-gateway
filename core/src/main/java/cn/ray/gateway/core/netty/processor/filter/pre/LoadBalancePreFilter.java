@@ -25,7 +25,7 @@ import java.util.Set;
 /**
  * @author Ray
  * @date 2024/1/18 10:08
- * @description 负载均衡前置过滤器,
+ * @description 前置过滤器-负载均衡
  */
 @Filter(
         id = ProcessorFilterConstants.LOAD_BALANCE_PRE_FILTER_ID,

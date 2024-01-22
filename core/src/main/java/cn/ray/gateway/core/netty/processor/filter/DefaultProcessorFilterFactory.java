@@ -85,7 +85,11 @@ public class DefaultProcessorFilterFactory extends AbstractProcessorFilterFactor
             // 上下文设置异常
             context.setThrowable(t);
 
-            // TODO
+            // 执行 doFilterChain 显式抛出异常时，Context上下文的生命周期为：Context.TERMINATED
+            // 恢复为正常运行状态, 即转换过滤器链
+            if(context.isTerminated()) {
+                context.running();
+            }
 
             // 执行异常过滤器链
             doErrorFilterChain(context);

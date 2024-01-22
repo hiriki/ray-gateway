@@ -1,6 +1,7 @@
 package cn.ray.gateway.core.netty.processor.filter;
 
 import cn.ray.gateway.core.context.Context;
+import cn.ray.gateway.core.helper.ResponseHelper;
 
 /**
  * @author Ray
@@ -16,12 +17,24 @@ public abstract class AbstractLinkedProcessorFilter<T> implements ProcessorFilte
 
     @Override
     public void fireNext(Context context, Object... args) throws Throwable {
+
+        if(context.isTerminated()) {
+            return;
+        }
+
+        if(context.isWritten()) {
+            ResponseHelper.writeResponse(context);
+        }
+
         if (this.next != null) {     // 过滤器存在且不为最后一个过滤器
             if (!this.next.check(context)) {     // 过滤器不需要执行
                 this.next.fireNext(context, args);   // 递归判断下一节点
             } else {
                 this.next.transformEntry(context, args);
             }
+        } else {
+            //	没有下一个节点了，已经到了链表的最后一个节点
+            context.terminated();
         }
     }
 

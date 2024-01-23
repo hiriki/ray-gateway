@@ -9,3 +9,4 @@ cn.ray.gateway.core.netty.processor.filter.route.HttpRouteFilter
 
 
 ## error
+cn.ray.gateway.core.netty.processor.filter.error.DefaultErrorFilter

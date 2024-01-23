@@ -35,7 +35,7 @@ import java.util.Set;
 )
 public class LoadBalancePreFilter extends AbstractEntryProcessorFilter<LoadBalancePreFilter.Config> {
 
-    public LoadBalancePreFilter(Class<FilterConfig> filterConfigClass) {
+    public LoadBalancePreFilter() {
         super(LoadBalancePreFilter.Config.class);
     }
 

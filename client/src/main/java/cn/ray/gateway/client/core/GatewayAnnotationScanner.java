@@ -64,6 +64,8 @@ public class GatewayAnnotationScanner {
 
                     String path = gatewayInvoker.path();
 
+                    // TODO GatewayInvoker 注解加入 ruleId 供研发人员配置
+
                     switch (protocol) {
                         case HTTP:
                             HttpServiceInvoker httpServiceInvoker = createHttpServiceInvoker(path, bean, method);

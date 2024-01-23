@@ -47,7 +47,7 @@ public class DefaultProcessorFilterFactory extends AbstractProcessorFilterFactor
         }
 
         for (ProcessorFilterType filterType : ProcessorFilterType.values()) {
-            List<ProcessorFilter<Context>> filters = filterMap.get(filterType);
+            List<ProcessorFilter<Context>> filters = filterMap.get(filterType.getCode());
             if (filters == null || filters.isEmpty()) {
                 continue;
             }

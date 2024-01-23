@@ -58,7 +58,7 @@ public class Rule implements Comparable<Rule>, Serializable {
      */
     public FilterConfig getFilterConfig(String filterId){
         for(FilterConfig filterConfig : filterConfigs) {
-            if(filterConfig.getId().equalsIgnoreCase(id)) {
+            if(filterConfig.getId().equalsIgnoreCase(filterId)) {
                 return filterConfig;
             }
         }

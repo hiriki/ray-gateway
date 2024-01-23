@@ -42,11 +42,11 @@ public class HelloController {
     @GatewayInvoker(path = "/testParam")
     @RequestMapping("/testParam")
     public String testParam(@RequestParam String name) {
-        count++;
-        if(count >= 1e5) {
+//        count++;
+//        if(count >= 1e5) {
             System.err.println("<------ testParam收到请求, name:" + name + " ------>");
-            count = 0;
-        }
+//            count = 0;
+//        }
         return name;
     }
 

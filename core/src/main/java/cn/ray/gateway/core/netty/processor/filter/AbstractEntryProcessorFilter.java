@@ -52,7 +52,6 @@ public abstract class AbstractEntryProcessorFilter<FilterConfigClass> extends Ab
     private FilterConfigClass dynamicLoadFilterConfigCache(Context context, Object[] args) {
         // 通过上下文对象拿到规则，再通过规则获取到指定filterId的FilterConfig
         Rule.FilterConfig filterConfig = context.getRule().getFilterConfig(filterAnnotation.id());
-
         //	定义一个cacheKey：ruleId$filterId
         //  不同规则下filter的配置信息可能不一样，比如各个服务请求的超时时间可能不一致
         String ruleId = context.getRule().getId();
@@ -61,7 +60,7 @@ public abstract class AbstractEntryProcessorFilter<FilterConfigClass> extends Ab
         FilterConfigClass filterConfigClass = cache.getIfPresent(cacheKey);
 
         if (filterConfigClass == null) {
-            if (filterConfig != null && StringUtils.isEmpty(filterConfig.getConfig())) {
+            if (filterConfig != null && StringUtils.isNotEmpty(filterConfig.getConfig())) {
                 String configStr = filterConfig.getConfig();
                 try {
                     // 将配置信息 json 转为 对应的泛型类 filterConfigClass

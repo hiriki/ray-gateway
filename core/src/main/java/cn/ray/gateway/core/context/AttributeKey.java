@@ -36,12 +36,18 @@ public abstract class AttributeKey<T> {
      */
     public static final AttributeKey<LoadBalanceStrategy> DUBBO_LOAD_BALANCE_STRATEGY = create(LoadBalanceStrategy.class);
 
+    /**
+     * Dubbo请求附加参数透传
+     */
+    public static final AttributeKey<Map<String, String>> DUBBO_ATTACHMENT = create(Map.class);
+
     static {
         NAMED_MAP.put("HTTP_INVOKER", HTTP_INVOKER);
         NAMED_MAP.put("DUBBO_INVOKER", DUBBO_INVOKER);
         NAMED_MAP.put("MATCH_INSTANCES", MATCH_INSTANCES);
         NAMED_MAP.put("LOAD_INSTANCE", LOAD_INSTANCE);
         NAMED_MAP.put("DUBBO_LOAD_BALANCE_STRATEGY", DUBBO_LOAD_BALANCE_STRATEGY);
+        NAMED_MAP.put("DUBBO_ATTACHMENT", DUBBO_ATTACHMENT);
     }
 
     /**

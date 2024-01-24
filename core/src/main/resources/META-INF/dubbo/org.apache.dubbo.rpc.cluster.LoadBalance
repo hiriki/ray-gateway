@@ -1,0 +1,1 @@
+balance=cn.ray.gateway.core.balance.DubboLoadBalance

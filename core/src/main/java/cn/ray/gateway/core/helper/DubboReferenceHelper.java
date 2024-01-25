@@ -101,7 +101,7 @@ public class DubboReferenceHelper {
 
     public CompletableFuture<Object> $invokeAsync(GatewayContext gatewayContext, DubboRequest dubboRequest) {
         //	内部封装，dubbo调用都要填充请求上下文供后续负载均衡使用
-        fillRpcContext(gatewayContext);
+//        fillRpcContext(gatewayContext);
         //	创建泛化调用对象, 并进行缓存
         GenericService genericService = newGenericServiceForReg(dubboRequest.getRegistriesStr(),
                 dubboRequest.getInterfaceClass(),
@@ -150,8 +150,8 @@ public class DubboReferenceHelper {
         if (timeout <= 0) {
             timeout = DEFAULT_TIMEOUT;
         }
-        GatewayConfig gatewayConfig = GatewayConfigLoader.gatewayConfig();
-        int dubboConnections = gatewayConfig.getDubboConnections();
+//        GatewayConfig gatewayConfig = GatewayConfigLoader.gatewayConfig();
+//        int dubboConnections = gatewayConfig.getDubboConnections();
 
         ReferenceConfig<GenericService> referenceConfig = new ReferenceConfig<GenericService>();
         referenceConfig.setApplication(applicationConfig);
@@ -165,7 +165,7 @@ public class DubboReferenceHelper {
 
         referenceConfig.setParameters(new HashMap<>());
         referenceConfig.getParameters().put(DISPATCHER_KEY, "direct");
-        referenceConfig.getParameters().put(SHARE_CONNECTIONS_KEY, String.valueOf(dubboConnections));
+        referenceConfig.getParameters().put(SHARE_CONNECTIONS_KEY, String.valueOf(4));
         if (StringUtils.isNotEmpty(version)) {
             referenceConfig.setVersion(version);
         }

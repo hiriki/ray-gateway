@@ -22,11 +22,11 @@ public class HelloServiceImpl implements HelloService {
         User user = new User();
         user.setName(name);
 
-        count++;
-        if(count >= 100000) {
+//        count++;
+//        if(count >= 100000) {
             System.err.println("<------ sayHelloUser.testParam收到请求, name:" + name + " ------>");
-            count = 0;
-        }
+//            count = 0;
+//        }
 //    	System.err.println("3 sayHelloUser(String name): "
 //				+ FastJsonConvertUtil.convertObjectToJSON(user));
         return user;

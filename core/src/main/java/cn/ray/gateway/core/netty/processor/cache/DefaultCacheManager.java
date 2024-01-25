@@ -2,6 +2,7 @@ package cn.ray.gateway.core.netty.processor.cache;
 
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
+import org.apache.dubbo.rpc.service.GenericService;
 
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -23,6 +24,8 @@ public class DefaultCacheManager {
     }
 
     public static final String FILTER_CONFIG_CACHE_ID = "filterConfigCache";
+
+    public static final String GENERIC_SERVICE_CONFIG_CACHE_ID = "genericServiceCache";
 
     //	双层缓存: 之后可以将其他需要缓存的地方也定义一个ID, 作为 key, 新建一个 caffeine 对象作为 value 进行缓存
     private final ConcurrentHashMap<String, Cache<String, ?>> cacheMap = new ConcurrentHashMap<>();

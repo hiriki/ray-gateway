@@ -19,6 +19,10 @@ public interface ProcessorFilterConstants {
     String HTTP_ROUTE_FILTER_NAME = "HTTP请求转发过滤器";
     int HTTP_ROUTE_FILTER_ORDER = 5000;
 
+    String DUBBO_ROUTE_FILTER_ID = "dubboRouteFilter";
+    String DUBBO_ROUTE_FILTER_NAME = "Dubbo请求转发过滤器";
+    int DUBBO_ROUTE_FILTER_ORDER = 5000;
+
     String DEFAULT_ERROR_FILTER_ID = "defaultErrorFilter";
     String DEFAULT_ERROR_FILTER_NAME = "默认异常处理过滤器";
     int DEFAULT_ERROR_FILTER_ORDER = 20000;

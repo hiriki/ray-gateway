@@ -4,6 +4,7 @@ cn.ray.gateway.core.netty.processor.filter.pre.TimeoutPreFilter
 
 ## route
 cn.ray.gateway.core.netty.processor.filter.route.HttpRouteFilter
+cn.ray.gateway.core.netty.processor.filter.route.DubboRouteFilter
 
 ## post
 

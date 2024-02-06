@@ -107,7 +107,6 @@ public class RollingNumber {
         getCurrentBucket().getMaxUpdater(type).update(value);
     }
 
-    //	TODO:
     public void reset() {
         // 	如果我们正在执行重置操作，这意味着lastBucket的统计数据将没有机会被CumulativeSum捕获，所以让我们在这里进行操作
         Bucket lastBucket = buckets.peekLast();

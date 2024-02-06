@@ -172,4 +172,28 @@ public interface Context {
      * 执行回调函数
      */
     void invokeCompletedCallback();
+
+
+    /**
+     * SR(Server[Core] Received):       网关作为服务端接收请求
+     * SS(Server[Core] Send):		    网关作为服务端写回响应
+     * RS(Route Send):		    		网关作为客户端发送请求
+     * RR(Route Received): 				网关作为客户端收到响应
+     */
+    long getSRTime();
+
+    void setSRTime(long sRTime);
+
+    long getSSTime();
+
+    void setSSTime(long sSTime);
+
+    long getRSTime();
+
+    void setRSTime(long rSTime);
+
+    long getRRTime();
+
+    void setRRTime(long rRTime);
+
 }

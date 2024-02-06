@@ -7,7 +7,7 @@ cn.ray.gateway.core.netty.processor.filter.route.HttpRouteFilter
 cn.ray.gateway.core.netty.processor.filter.route.DubboRouteFilter
 
 ## post
-
+cn.ray.gateway.core.netty.processor.filter.post.StatisticsPostFilter
 
 ## error
 cn.ray.gateway.core.netty.processor.filter.error.DefaultErrorFilter

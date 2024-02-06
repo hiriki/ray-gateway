@@ -2,6 +2,7 @@ package cn.ray.gateway.core.helper;
 
 import cn.ray.gateway.common.constants.BasicConstants;
 import cn.ray.gateway.common.enums.ResponseCode;
+import cn.ray.gateway.common.utils.TimeUtil;
 import cn.ray.gateway.core.context.Context;
 import cn.ray.gateway.core.context.GatewayResponse;
 import io.netty.buffer.ByteBuf;
@@ -82,6 +83,9 @@ public class ResponseHelper {
     public static void writeResponse(Context gatewayContext) {
         // 释放请求资源
         gatewayContext.releaseRequest();
+
+        // 设置SS: 网关作为服务端写回响应的时间
+        gatewayContext.setSSTime(TimeUtil.currentTimeMillis());
 
         if (gatewayContext.isWritten()) {
             // 1. 构建响应对象，并写回数据

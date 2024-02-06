@@ -7,6 +7,7 @@ import cn.ray.gateway.common.enums.ResponseCode;
 import cn.ray.gateway.common.exception.DubboConnectException;
 import cn.ray.gateway.common.exception.GatewayResponseException;
 import cn.ray.gateway.common.utils.FastJsonConvertUtil;
+import cn.ray.gateway.common.utils.TimeUtil;
 import cn.ray.gateway.core.GatewayConfigLoader;
 import cn.ray.gateway.core.context.*;
 import cn.ray.gateway.core.helper.DubboReferenceHelper;
@@ -70,6 +71,9 @@ public class DubboRouteFilter extends AbstractEntryProcessorFilter<FilterConfig>
         // 构建dubbo请求对象
         DubboRequest dubboRequest = DubboReferenceHelper.buildDubboRequest(dubboServiceInvoker, parameters.toArray());
 
+        // 设置RS: 网关作为客户端发送请求到下游的时间
+        gatewayContext.setRSTime(TimeUtil.currentTimeMillis());
+
         CompletableFuture<Object> future = DubboReferenceHelper.getInstance().$invokeAsync(gatewayContext, dubboRequest);
 
         // 单异步和双异步模式
@@ -92,6 +96,9 @@ public class DubboRouteFilter extends AbstractEntryProcessorFilter<FilterConfig>
                           Object response, Throwable throwable,
                           GatewayContext gatewayContext, Object[] args) {
         try {
+            //  0. 设置RR: 网关作为客户端收到下游响应的时间
+            gatewayContext.setRRTime(TimeUtil.currentTimeMillis());
+
             if (Objects.nonNull(throwable)) {
                 DubboConnectException dubboConnectException = new DubboConnectException(throwable,
                         gatewayContext.getUniqueId(),

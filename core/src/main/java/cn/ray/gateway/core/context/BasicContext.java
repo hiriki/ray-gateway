@@ -47,6 +47,21 @@ public abstract class BasicContext implements Context {
      */
     protected List<Consumer<Context>> completedCallbacks;
 
+
+    /**
+     * SR(Server[Core] Received):       网关作为服务端接收请求
+     * SS(Server[Core] Send):		    网关作为服务端写回请求
+     * RS(Route Send):		    		网关作为客户端发送请求
+     * RR(Route Received): 				网关作为客户端收到请求
+     */
+    protected long sRTime;
+
+    protected long sSTime;
+
+    protected long rSTime;
+
+    protected long rRTime;
+
     public BasicContext(String protocol, ChannelHandlerContext nettyCtx, boolean isKeepAlive) {
         this.protocol = protocol;
         this.nettyCtx = nettyCtx;
@@ -149,5 +164,45 @@ public abstract class BasicContext implements Context {
         if(completedCallbacks != null) {
             completedCallbacks.forEach(call -> call.accept(this));
         }
+    }
+
+    @Override
+    public long getSRTime() {
+        return this.sRTime;
+    }
+
+    @Override
+    public void setSRTime(long sRTime) {
+        this.sRTime = sRTime;
+    }
+
+    @Override
+    public long getSSTime() {
+        return this.sSTime;
+    }
+
+    @Override
+    public void setSSTime(long sSTime) {
+        this.sSTime = sSTime;
+    }
+
+    @Override
+    public long getRSTime() {
+        return this.rSTime;
+    }
+
+    @Override
+    public void setRSTime(long rSTime) {
+        this.rSTime = rSTime;
+    }
+
+    @Override
+    public long getRRTime() {
+        return this.rRTime;
+    }
+
+    @Override
+    public void setRRTime(long rRTime) {
+        this.rRTime = rRTime;
     }
 }

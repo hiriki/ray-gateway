@@ -71,6 +71,9 @@ public class RequestHelper {
         //	6. 	设置一些必要的上下文参数用于后面使用
         putAttribute(gatewayContext, serviceInvoker);
 
+        //  7.  设置SR: 网关作为服务端接收请求的时间
+        gatewayContext.setSRTime(gatewayRequest.getBeginTime());
+
         return gatewayContext;
     }
 

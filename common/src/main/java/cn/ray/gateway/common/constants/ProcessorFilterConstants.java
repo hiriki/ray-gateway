@@ -26,4 +26,8 @@ public interface ProcessorFilterConstants {
     String DEFAULT_ERROR_FILTER_ID = "defaultErrorFilter";
     String DEFAULT_ERROR_FILTER_NAME = "默认异常处理过滤器";
     int DEFAULT_ERROR_FILTER_ORDER = 20000;
+
+    String STATISTICS_POST_FILTER_ID = "statisticsPostFilter";
+    String STATISTICS_POST_FILTER_NAME = "统计分析过滤器";
+    int STATISTICS_POST_FILTER_ORDER = Integer.MAX_VALUE;
 }

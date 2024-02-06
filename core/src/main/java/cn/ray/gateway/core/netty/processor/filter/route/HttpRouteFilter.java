@@ -4,6 +4,7 @@ import cn.ray.gateway.common.constants.ProcessorFilterConstants;
 import cn.ray.gateway.common.enums.ResponseCode;
 import cn.ray.gateway.common.exception.GatewayConnectException;
 import cn.ray.gateway.common.exception.GatewayResponseException;
+import cn.ray.gateway.common.utils.TimeUtil;
 import cn.ray.gateway.core.GatewayConfigLoader;
 import cn.ray.gateway.core.context.Context;
 import cn.ray.gateway.core.context.GatewayContext;
@@ -17,6 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.asynchttpclient.Request;
 import org.asynchttpclient.Response;
 
+import java.sql.Time;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeoutException;
@@ -43,6 +45,9 @@ public class HttpRouteFilter extends AbstractEntryProcessorFilter<FilterConfig> 
     public void entry(Context context, Object... args) throws Throwable {
         GatewayContext gatewayContext = (GatewayContext) context;
         Request request = gatewayContext.getRequestMutable().build();
+
+        // 设置RS: 网关作为客户端发送请求到下游的时间
+        gatewayContext.setRSTime(TimeUtil.currentTimeMillis());
 
         CompletableFuture<Response> future = AsyncHttpHelper.getInstance().executeRequest(request);
 
@@ -72,6 +77,9 @@ public class HttpRouteFilter extends AbstractEntryProcessorFilter<FilterConfig> 
      */
     private void complete(Request request, Response response, Throwable throwable, GatewayContext gatewayContext, Object[] args) {
         try {
+            //  0. 设置RR: 网关作为客户端收到下游响应的时间
+            gatewayContext.setRRTime(TimeUtil.currentTimeMillis());
+
             //	1. 释放请求资源
             gatewayContext.releaseRequest();
 

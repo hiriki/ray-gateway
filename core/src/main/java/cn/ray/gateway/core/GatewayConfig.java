@@ -94,6 +94,16 @@ public class GatewayConfig {
      */
     private String waitStrategy = "blocking";
 
+    /**
+     * 默认请求超时时间 3s
+     */
+    private long requestTimeout = 3000;
+
+    /**
+     * 默认路由转发的慢调用时间 2s
+     */
+    private long routeTimeout = 2000;
+
     public WaitStrategy getUseWaitStrategy() {
         switch (waitStrategy) {
             case "blocking":

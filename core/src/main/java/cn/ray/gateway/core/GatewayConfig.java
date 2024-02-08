@@ -104,6 +104,16 @@ public class GatewayConfig {
      */
     private long routeTimeout = 2000;
 
+    /**
+     * Kafka地址
+     */
+    private String kafkaAddress = "";
+
+    /**
+     * 网关服务指标消息主题
+     */
+    private String metricTopic = "gateway-metric-topic";
+
     public WaitStrategy getUseWaitStrategy() {
         switch (waitStrategy) {
             case "blocking":

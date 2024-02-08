@@ -1,18 +1,25 @@
 package cn.ray.gateway.core.netty.processor.filter.post;
 
 import cn.ray.gateway.common.constants.ProcessorFilterConstants;
+import cn.ray.gateway.common.metric.Metric;
+import cn.ray.gateway.common.metric.MetricType;
 import cn.ray.gateway.common.utils.Pair;
+import cn.ray.gateway.common.utils.TimeUtil;
 import cn.ray.gateway.core.GatewayConfigLoader;
 import cn.ray.gateway.core.context.Context;
 import cn.ray.gateway.core.netty.processor.filter.AbstractEntryProcessorFilter;
 import cn.ray.gateway.core.netty.processor.filter.Filter;
 import cn.ray.gateway.core.netty.processor.filter.FilterConfig;
 import cn.ray.gateway.core.netty.processor.filter.ProcessorFilterType;
+import cn.ray.gateway.core.plugin.Plugin;
+import cn.ray.gateway.core.plugin.PluginManager;
+import cn.ray.gateway.core.plugin.metric.kafka.MetricKafkaClientPlugin;
 import cn.ray.gateway.core.rolling.RollingNumber;
 import cn.ray.gateway.core.rolling.RollingNumberEvent;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.HashMap;
 import java.util.concurrent.ArrayBlockingQueue;
 
 /**
@@ -116,7 +123,23 @@ public class StatisticsPostFilter extends AbstractEntryProcessorFilter<Statistic
                     Long value = pair.getObject2();
 
                     // report 上报
+                    Plugin plugin = PluginManager.getMultiplePlugins().getPlugin(MetricKafkaClientPlugin.class.getName());
+                    if(plugin != null) {
+                        MetricKafkaClientPlugin metricKafkaClientPlugin = (MetricKafkaClientPlugin)plugin;
 
+                        HashMap<String, String> tags = new HashMap<>();
+                        tags.put(MetricType.KEY, MetricType.STATISTICS);
+
+                        String topic = GatewayConfigLoader.gatewayConfig().getMetricTopic();
+
+                        Metric metric = Metric.create(key,
+                                value,
+                                TimeUtil.currentTimeMillis(),
+                                tags,
+                                topic,
+                                false);
+                        metricKafkaClientPlugin.send(metric);
+                    }
                 } catch (InterruptedException e) {
                     // ignore
                 }

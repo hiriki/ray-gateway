@@ -8,7 +8,7 @@ package cn.ray.gateway.client;
 public enum GatewayProtocol {
 
     HTTP("http", "http协议"),
-    DUBBO("dubbo", "http协议");
+    DUBBO("dubbo", "dubbo协议");
 
     private String code;
 

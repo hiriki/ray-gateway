@@ -131,7 +131,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>com.ruyuan.rapid.core.Bootstrap</mainClass>
+                            <mainClass>cn.ray.gateway.core.Bootstrap</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>

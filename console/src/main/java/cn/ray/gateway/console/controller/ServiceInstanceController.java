@@ -40,7 +40,7 @@ public class ServiceInstanceController {
         }
     }
 
-    @PostMapping("/updateTags")
+    @PutMapping("/updateTags")
     public void updateTags(@RequestBody ServiceInstanceDTO serviceInstanceDTO) throws Exception {
         if(serviceInstanceDTO != null) {
             serviceInstanceService.updateTags(

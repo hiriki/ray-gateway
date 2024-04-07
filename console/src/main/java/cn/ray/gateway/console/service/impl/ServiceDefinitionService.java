@@ -47,7 +47,7 @@ public class ServiceDefinitionService implements IServiceDefinitionService {
 
     @Override
     public void updatePatternPathByUniqueId(String namespace, String env, String uniqueId, String patternPath) throws Exception {
-        updateServiceDefinitionByUniqueId(namespace, env, uniqueId, false);
+        updateServiceDefinitionByUniqueId(namespace, env, uniqueId, patternPath);
     }
 
     @Override

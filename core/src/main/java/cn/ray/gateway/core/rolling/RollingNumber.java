@@ -191,7 +191,7 @@ public class RollingNumber {
             return currentBucket;
         }
 
-        //	如果我们没有找到当前的桶, 那么我们必须要创建一个新的同并返回
+        //	如果我们没有找到当前的桶, 那么我们必须要创建一个新的桶并返回
         if (newBucketLock.tryLock()) {
             try {
                 //	如果没有最后一个桶

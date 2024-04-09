@@ -9,6 +9,10 @@
       "id": "statisticsPostFilter"
     },
     {
+      "config": "{\"loggable\":\"false\"}",
+      "id": "grayReleasePreFilter"
+    },
+    {
       "config": "{\"loggable\":\"false\",\"loadBalanceStrategy\":\"RANDOM\"}",
       "id": "loadBalancePreFilter"
     },

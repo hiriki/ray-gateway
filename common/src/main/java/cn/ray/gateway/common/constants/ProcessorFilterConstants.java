@@ -7,6 +7,10 @@ package cn.ray.gateway.common.constants;
  */
 public interface ProcessorFilterConstants {
 
+    String GRAY_RELEASE_PRE_FILTER_ID = "grayReleasePreFilter";
+    String GRAY_RELEASE_PRE_FILTER_NAME = "灰度发布前置过滤器";
+    int GRAY_RELEASE_PRE_FILTER_ORDER = 1500;
+
     String LOAD_BALANCE_PRE_FILTER_ID = "loadBalancePreFilter";
     String LOAD_BALANCE_PRE_FILTER_NAME = "负载均衡前置过滤器";
     int LOAD_BALANCE_PRE_FILTER_ORDER = 2000;

@@ -1,9 +1,10 @@
 server:
   servlet:
     context-path: /
-  port: 8083
+  port: 8084
 
 ray-gateway:
   registryAddress: http://#:20000,http://#:20002,http://#:20004
   namespace: ray-gateway
   env: dev
+  tags: 1

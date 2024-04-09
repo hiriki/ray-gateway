@@ -1,4 +1,5 @@
 ## pre
+cn.ray.gateway.core.netty.processor.filter.pre.GrayReleasePreFilter
 cn.ray.gateway.core.netty.processor.filter.pre.LoadBalancePreFilter
 cn.ray.gateway.core.netty.processor.filter.pre.TimeoutPreFilter
 

@@ -3,6 +3,7 @@ package cn.ray.gateway.common.config;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 /**
  * @author Ray
@@ -67,6 +68,13 @@ public class DynamicConfigManager {
 
     public Set<ServiceInstance> getServiceInstancesByUniqueId(String uniqueId){
         return serviceInstanceMap.get(uniqueId);
+    }
+
+    public Set<ServiceInstance> getServiceInstancesByUniqueIdAndTags(String uniqueId, String tags){
+        Set<ServiceInstance> instances = serviceInstanceMap.get(uniqueId);
+        return instances.stream()
+                .filter(serviceInstance -> tags.equals(serviceInstance.getTags()))
+                .collect(Collectors.toSet());
     }
 
     public void updateServiceInstance(String uniqueId, ServiceInstance serviceInstance) {

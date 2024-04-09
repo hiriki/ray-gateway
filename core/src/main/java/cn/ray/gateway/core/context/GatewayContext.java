@@ -18,11 +18,14 @@ public class GatewayContext extends BasicContext {
 
     private final Rule rule;
 
+    private boolean isGray;
+
     private GatewayContext(String protocol, ChannelHandlerContext nettyCtx, boolean isKeepAlive,
                           GatewayRequest gatewayRequest, Rule rule) {
         super(protocol, nettyCtx, isKeepAlive);
         this.gatewayRequest = gatewayRequest;
         this.rule = rule;
+        this.isGray = false;
     }
 
     public static class Builder {
@@ -158,4 +161,11 @@ public class GatewayContext extends BasicContext {
         return gatewayRequest.getUniqueId();
     }
 
+    public boolean isGray() {
+        return isGray;
+    }
+
+    public void setGray(boolean gray) {
+        isGray = gray;
+    }
 }

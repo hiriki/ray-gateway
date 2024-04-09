@@ -28,4 +28,9 @@ public class GatewayClientProperties {
      * 	环境属性
      */
     private String env = "dev";
+
+    /**
+     * 标签
+     */
+    private String tags;
 }

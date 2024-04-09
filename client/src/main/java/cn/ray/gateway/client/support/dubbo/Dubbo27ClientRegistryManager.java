@@ -119,6 +119,8 @@ public class Dubbo27ClientRegistryManager extends AbstractClientRegistryManager 
                 serviceInstance.setRegisterTime(TimeUtil.currentTimeMillis());
                 // 服务实例对应版本
                 serviceInstance.setVersion(version);
+                // 服务实例标签
+                serviceInstance.setTags(getTags());
 
                 // 注册服务实例
                 registerServiceInstance(serviceInstance);

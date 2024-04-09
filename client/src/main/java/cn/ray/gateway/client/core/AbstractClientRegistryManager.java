@@ -31,6 +31,8 @@ public abstract class AbstractClientRegistryManager {
 
     public static final String ENV_KEY = "env";
 
+    public static final String TAGS_KEY = "tags";
+
     protected volatile boolean whetherStart = false;
 
     protected static String registryAddress;
@@ -38,6 +40,8 @@ public abstract class AbstractClientRegistryManager {
     protected static String namespace;
 
     protected static String env;
+
+    protected static String tags;
 
     public static Properties properties = new Properties();
 
@@ -62,6 +66,7 @@ public abstract class AbstractClientRegistryManager {
                 registryAddress = properties.getProperty(REGISTRY_ADDRESS_KEY);
                 namespace = properties.getProperty(NAMESPACE_KEY);
                 env = properties.getProperty(ENV_KEY);
+                tags = properties.getProperty(TAGS_KEY);
 
                 if (StringUtils.isBlank(registryAddress)) {
                     String errorMessage = "网关注册中心地址不能为空";
@@ -99,6 +104,7 @@ public abstract class AbstractClientRegistryManager {
                 namespace = GatewayClientProperties.PROPERTIES_PREFIX;
             }
             env = gatewayClientProperties.getEnv();
+            tags = gatewayClientProperties.getTags();
         }
 
         //  2. 初始化加载注册中心对象
@@ -206,5 +212,9 @@ public abstract class AbstractClientRegistryManager {
 
     public static String getRulesPath() {
         return rulesPath;
+    }
+
+    public static String getTags() {
+        return tags;
     }
 }

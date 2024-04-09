@@ -67,6 +67,14 @@ public class LoadBalancePreFilter extends AbstractEntryProcessorFilter<LoadBalan
 
         // 获取对应指定服务下的所有实例, 并放入网关上下文中, 便于后续进行负载均衡
         Set<ServiceInstance> instances = DynamicConfigManager.getInstance().getServiceInstancesByUniqueId(uniqueId);
+
+        // 若为灰度流量, 则获取对应指定服务下指定标签的服务实例
+        // 这里由于Dubbo需要扩展点使用invokers来添加实例列表支持负载均衡，无法做到按标签添加
+        // TODO 因此暂不考虑(Dubbo服务也经常用于内部服务, 应该也不需要灰度?)
+        if (gatewayContext.isGray()) {
+            String tags = gatewayContext.getRequest().getHeaders().get(GrayReleasePreFilter.GRAY);
+            instances = DynamicConfigManager.getInstance().getServiceInstancesByUniqueIdAndTags(uniqueId, tags);
+        }
         gatewayContext.putAttribute(AttributeKey.MATCH_INSTANCES, instances);
 
         // 通过过滤器配置获取对应的负载均衡策略

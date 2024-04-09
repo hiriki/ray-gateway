@@ -82,7 +82,7 @@ public class GatewayConfig {
     /**
      * 网关队列：缓冲模式
      */
-    private String bufferType = GatewayBufferHelper.MPMC; // GatewayBufferHelper.FLUSHER
+    private String bufferType = GatewayBufferHelper.FLUSHER; // GatewayBufferHelper.FLUSHER
 
     /**
      * 网关队列：内存队列大小
@@ -107,7 +107,7 @@ public class GatewayConfig {
     /**
      * Kafka地址
      */
-    private String kafkaAddress = "";
+    private String kafkaAddress = "#:9192";
 
     /**
      * 网关服务指标消息主题

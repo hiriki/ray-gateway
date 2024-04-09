@@ -45,7 +45,6 @@ public class NettyBatchEventProcessor implements NettyProcessor {
 
     @Override
     public void process(HttpRequestWrapper httpRequestWrapper) {
-        System.err.println("NettyBatchEventProcessor add!");
         parallelFlusher.add(httpRequestWrapper);
     }
 

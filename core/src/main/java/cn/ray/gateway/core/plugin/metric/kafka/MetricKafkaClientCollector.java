@@ -1,11 +1,15 @@
 package cn.ray.gateway.core.plugin.metric.kafka;
 
+import cn.ray.gateway.common.metric.Metric;
 import cn.ray.gateway.common.metric.MetricClientCollector;
 import cn.ray.gateway.common.metric.MetricException;
 import cn.ray.gateway.common.metric.TimeSeries;
 import cn.ray.gateway.common.utils.FastJsonConvertUtil;
+import cn.ray.gateway.common.utils.TimeUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.producer.*;
 
+import java.util.HashMap;
 import java.util.Objects;
 import java.util.Properties;
 import java.util.concurrent.ExecutionException;
@@ -16,6 +20,7 @@ import java.util.concurrent.Future;
  * @date 2024/2/8 21:58
  * @description
  */
+@Slf4j
 public class MetricKafkaClientCollector implements MetricClientCollector {
 
     /**

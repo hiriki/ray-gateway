@@ -373,7 +373,7 @@ public class RollingNumber {
                     long sum = lastBucket.getAdder(type).sum();
                     getAdder(type).add(sum);
                     if (sum != 0) {
-                        System.err.println("========>>> QPS: " + sum);
+                        // System.err.println("========>>> QPS: " + sum);
                         //	每次上报数据的时机
                         if(blockingQueue != null) {
                             blockingQueue.add(new Pair<String, Long>(type.name(), sum));

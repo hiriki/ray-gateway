@@ -18,15 +18,18 @@ import cn.ray.gateway.core.rolling.RollingNumber;
 import cn.ray.gateway.core.rolling.RollingNumberEvent;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.HashMap;
 import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * @author Ray
  * @date 2024/2/6 19:35
  * @description 后置过滤器-统计分析
  */
+@Slf4j
 @Filter(
         id = ProcessorFilterConstants.STATISTICS_POST_FILTER_ID,
         name = ProcessorFilterConstants.STATISTICS_POST_FILTER_NAME,
@@ -43,12 +46,15 @@ public class StatisticsPostFilter extends AbstractEntryProcessorFilter<Statistic
 
     private Thread conusmerThread;
 
+    private final AtomicBoolean isStart = new AtomicBoolean(false);
+
     public StatisticsPostFilter() {
         super(StatisticsPostFilter.Config.class);
         MetricConsumer metricConsumer = new MetricConsumer();
         this.rollingNumber = new RollingNumber(windowSize, bucketSize,
                 "ray-gateway",
                 metricConsumer.getMetricQueue());
+        metricConsumer.start();
         conusmerThread = new Thread(metricConsumer);
     }
 
@@ -57,7 +63,9 @@ public class StatisticsPostFilter extends AbstractEntryProcessorFilter<Statistic
         try {
             StatisticsPostFilter.Config config = (StatisticsPostFilter.Config) args[0];
             if(config.isUseRollingNumber()) {
-                conusmerThread.start();
+                if (isStart.compareAndSet(false, true)) {
+                    conusmerThread.start();
+                }
                 rollingNumber(context, args);
             }
         } finally {

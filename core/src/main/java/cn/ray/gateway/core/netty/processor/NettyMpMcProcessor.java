@@ -44,7 +44,6 @@ public class NettyMpMcProcessor implements NettyProcessor {
 
     @Override
     public void process(HttpRequestWrapper httpRequestWrapper) throws Exception {
-        System.err.println("NettyMpMcProcessor put!");
         this.mpmcBlockingQueue.put(httpRequestWrapper);
     }
 

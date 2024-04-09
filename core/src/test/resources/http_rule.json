@@ -1,24 +1,28 @@
 {
-  "filterConfigs":[
+  "filterConfigs": [
     {
-      "config":"{\"loggable\":\"false\"}",
-      "id":"defaultErrorFilter"
+      "config": "{\"loggable\":\"false\"}",
+      "id": "defaultErrorFilter"
     },
     {
-      "config":"{\"loggable\":\"false\",\"loadBalanceStrategy\":\"RANDOM\"}",
-      "id":"loadBalancePreFilter"
+      "config": "{\"loggable\":\"false\",\"useRollingNumber\":\"true\"}",
+      "id": "statisticsPostFilter"
     },
     {
-      "config":"{\"loggable\":\"false\"}",
-      "id":"httpRouteFilter"
+      "config": "{\"loggable\":\"false\",\"loadBalanceStrategy\":\"RANDOM\"}",
+      "id": "loadBalancePreFilter"
     },
     {
-      "config":"{\"loggable\":\"false\",\"timeout\":\"4000\"}",
-      "id":"timeoutPreFilter"
+      "config": "{\"loggable\":\"false\"}",
+      "id": "httpRouteFilter"
+    },
+    {
+      "config": "{\"loggable\":\"false\",\"timeout\":\"4000\"}",
+      "id": "timeoutPreFilter"
     }
   ],
-  "id":"HTTP",
-  "name":"测试规则1",
-  "order":1,
-  "protocol":"http"
+  "id": "HTTP",
+  "name": "测试规则1",
+  "order": 1,
+  "protocol": "http"
 }

@@ -55,7 +55,7 @@ public class SpringMVCClientRegistryManager extends AbstractClientRegistryManage
         if (!ObjectUtils.allNotNull(serverProperties, serverProperties.getPort())) {
             return;
         }
-        // 如果当前验证属性都为空 就进行初始化
+        // 如果当前验证属性都不为空 就进行初始化
         whetherStart = true;
     }
 

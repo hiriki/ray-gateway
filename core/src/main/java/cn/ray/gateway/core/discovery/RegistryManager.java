@@ -72,7 +72,8 @@ public class RegistryManager {
         //	3. 注册监听
         this.registryService.addWatchers(superPath, new ServiceListener());
 
-        // 这里存在极限情况: 注册监听的同时服务发生变化并且服务已经开始订阅, put delete 相关操作未执行, 可能缓存到脏数据
+        // 这里存在极限情况: 监听到服务发生变化并且服务处于订阅期间
+        // 并发情况下，存在 put delete 相关操作执行后又被订阅操作覆盖的问题, 可能缓存到脏数据
         // 使用 CountDownLatch 阻塞监听到变化后的 put 、delete 操作, 直到订阅完成
 
         //	4.订阅服务

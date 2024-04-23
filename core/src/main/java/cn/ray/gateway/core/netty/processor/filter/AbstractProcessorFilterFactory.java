@@ -102,7 +102,7 @@ public abstract class AbstractProcessorFilterFactory implements ProcessorFilterF
         Filter annotation = clazz.getAnnotation(Filter.class);
         if (annotation != null) {
             String filterId = annotation.id();
-            // 冗余设计, 后续可不用给定FilterID, 默认为类名
+            // TODO 冗余设计, 后续可不用给定FilterID, 默认为类名
             if (filterId == null || filterId.length() < 1) {
                 filterId = clazz.getName();
             }

@@ -45,7 +45,7 @@ public class RandomLoadBalance extends AbstractLoadBalance {
             // 	根据偏移量找到靠近偏移量范围的实例
             for (ServiceInstance instance : instances) {
                 //	0 == > 100    1 ==> 80    2 ==> 40
-                // [0,99] [101,179] [180-229]
+                // [0,99] [101,179] [180-219]
                 // 122 - 100 = 22
                 // 22 - 80 return
                 offset = offset - getWeight(instance);

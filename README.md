@@ -1,7 +1,7 @@
 # ray-gateway
 在生产环境中，API网关部署的拓扑结构如下图所示。下游服务启动时向注册中心添加自身服务的元数据信息，API网关启动时与注册中心连接，拉取所属命名空间及环境的下游服务的元数据信息，从而完成一系列外部请求的处理与响应，并且在处理请求过程中，将监控数据上报到Kafka中，控制台直接与注册中心交互，完成对各类元数据信息的管理与维护，并且通过拉取Kafka中的数据实现对API网关整体的监控。
 
-![API网关部署拓扑图](docs/images/deployment_topology.png)
+<img src="docs/images/deployment_topology.png" alt="img" style="zoom: 25%;" />
 
 本系统的开发语言为Java，核心开发框架使用Netty。注册中心采用ETCD，消息队列使用的是Kafka，最后基于Docker进行部署。各种软件的版本如下表所示。
 
@@ -40,7 +40,7 @@ env=dev
 
 - 将 `test-mvc/src/main/resources/application.yml` 或 `test-mvc/src/main/resources/gateway.properties` 配置文件中注册中心地址 `ray-gateway.registryAddress` 更改为当前部署的ETCD地址
 
-```Properties
+```yaml
 server:
   servlet:
     context-path: /
